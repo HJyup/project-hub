@@ -5,15 +5,15 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/font/page-header";
-import FeaturesCard, { cardsData } from "@/components/main/features-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import FeaturesCard, { cardsData } from "@/features/main/features-card";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col p-16">
+    <main className="flex min-h-screen flex-col md:p-16 p-2">
       <PageHeader>
         <span className="inline-flex items-center rounded-lg bg-muted px-3 py-1 text-sm font-medium">
           🎉 <Separator className="mx-2 h-4" orientation="vertical" />{" "}
@@ -22,7 +22,7 @@ export default function Home() {
           </span>
         </span>
         <PageHeaderHeading>Project hub.</PageHeaderHeading>
-        <PageHeaderDescription className="font-light">
+        <PageHeaderDescription className="font-light text-xs md:text-xl">
           Streamline your projects, prioritise with precision, and amplify
           productivity -{" "}
           <span className="text-slate-600">all in a day's work</span>.
@@ -34,27 +34,19 @@ export default function Home() {
           >
             Get Started
           </Link>
-          <Link
-            href="./hub/projects"
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "rounded-[6px]",
-            )}
-          >
-            Already have an account?
-          </Link>
         </section>
       </PageHeader>
-      <Separator className="m-5" />
-      <div className="flex justify-between flex-wrap">
+      <div className="w-full flex flex-col flex-wrap lg:flex-row lg:mx-2">
         {cardsData.map((card, index) => (
-          <FeaturesCard
-            key={index}
-            icon={card.icon}
-            title={card.title}
-            description={card.description}
-            badge={<Badge {...card.badgeProps} />}
-          />
+          <div key={index} className="w-full lg:w-1/3 mb-4 lg:px-2">
+            <FeaturesCard
+              key={index}
+              icon={card.icon}
+              title={card.title}
+              description={card.description}
+              badge={<Badge {...card.badgeProps} />}
+            />
+          </div>
         ))}
       </div>
     </main>

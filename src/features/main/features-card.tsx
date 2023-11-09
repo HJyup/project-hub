@@ -98,7 +98,7 @@ const FeaturesCard = ({
   badge: ReactNode;
 }) => {
   return (
-    <Card className="w-[380px] m-3">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-3">
           {icon}

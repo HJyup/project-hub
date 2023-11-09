@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { NavigationBar } from "@/components/main/navigation-bar";
+import NavigationBar from "@/features/main/navigation-bar";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
