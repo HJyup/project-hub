@@ -28,11 +28,14 @@ export default function Home() {
           <span className="text-slate-600">all in a day's work</span>.
         </PageHeaderDescription>
         <section className="flex w-full items-center space-x-4 pb-8 pt-4 md:pb-10">
-          <Link href="./" className={cn(buttonVariants(), "rounded-[6px]")}>
+          <Link
+            href="./hub/projects"
+            className={cn(buttonVariants(), "rounded-[6px]")}
+          >
             Get Started
           </Link>
           <Link
-            href="./"
+            href="./hub/projects"
             className={cn(
               buttonVariants({ variant: "outline" }),
               "rounded-[6px]",

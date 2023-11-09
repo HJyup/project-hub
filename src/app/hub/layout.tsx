@@ -1,7 +1,14 @@
 import { ReactNode } from "react";
 
+import { NavigationBar } from "@/components/main/navigation-bar";
+
 const Layout = ({ children }: { children: ReactNode }) => {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <NavigationBar />
+      <div className="p-10">{children}</div>
+    </div>
+  );
 };
 
 export default Layout;
