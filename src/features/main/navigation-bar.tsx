@@ -15,7 +15,7 @@ const NavigationBar = ({ className, ...props }: NavigationBarProps) => {
   const pathname = usePathname();
 
   return (
-    <div className="flex p-3 border-b border-muted justify-between items-center">
+    <div className="flex p-3 border-b border-muted justify-center md:justify-between items-center">
       <ScrollArea className="max-w-[600px] lg:max-w-none">
         <div className={cn("flex items-center", className)} {...props}>
           {navigationsTest.map((navigation) => (

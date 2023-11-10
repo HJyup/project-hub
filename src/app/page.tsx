@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import {
@@ -29,14 +31,14 @@ export default function Home() {
         </PageHeaderDescription>
         <section className="flex w-full items-center space-x-4 pb-8 pt-4 md:pb-10">
           <Link
-            href="./hub/projects"
+            href="hub/projects"
             className={cn(buttonVariants(), "rounded-[6px]")}
           >
             Get Started
           </Link>
         </section>
       </PageHeader>
-      <div className="w-full flex flex-col flex-wrap lg:flex-row lg:mx-2">
+      <div className="w-full flex flex-col flex-wrap lg:flex-row lg:mx-2 p-4">
         {cardsData.map((card, index) => (
           <div key={index} className="w-full lg:w-1/3 mb-4 lg:px-2">
             <FeaturesCard
