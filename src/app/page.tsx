@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import FeaturesCard, { cardsData } from "@/components/modules/features-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -8,7 +9,6 @@ import {
   PageHeaderHeading,
 } from "@/components/ui/page-header";
 import { Separator } from "@/components/ui/separator";
-import FeaturesCard, { cardsData } from "@/features/main/features-card";
 import { cn } from "@/lib/utils";
 
 export default function Home() {

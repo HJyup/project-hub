@@ -1,11 +1,11 @@
 import { PlusIcon } from "lucide-react";
 
 import MainTabsLayout from "@/components/layout/main-tabs-layout";
+import MainTitle from "@/components/modules/main-title";
+import ProjectCard from "@/components/modules/project-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import MainTitle from "@/features/hub/main-title";
-import ProjectCard from "@/features/hub/projects/project-card";
-import { projects } from "@/features/hub/projects/types/project-test";
+import { projects } from "@/types/project-test";
 
 const Page = () => {
   return (

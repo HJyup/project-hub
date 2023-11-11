@@ -7,8 +7,8 @@ import { useSession } from "next-auth/react";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { navigationsTest } from "@/features/main/types/navigations-test";
 import { cn } from "@/lib/utils";
+import { navigations } from "@/types/navigations";
 
 interface NavigationBarProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -20,7 +20,7 @@ const NavigationBar = ({ className, ...props }: NavigationBarProps) => {
     <div className="flex p-3 border-b border-muted justify-center md:justify-between items-center">
       <ScrollArea className="max-w-[600px] lg:max-w-none">
         <div className={cn("flex items-center", className)} {...props}>
-          {navigationsTest.map((navigation) => (
+          {navigations.map((navigation) => (
             <Link
               href={navigation.href}
               key={navigation.href}

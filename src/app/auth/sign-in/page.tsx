@@ -21,7 +21,7 @@ const Page = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [formErrors, setFormErrors] = useState<z.ZodIssue[] | null>(null);
+  const [isError, setIsError] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -31,6 +31,7 @@ const Page = () => {
     event.preventDefault();
 
     try {
+      setIsError(false);
       userSchema.parse(formData);
 
       const signInData = await signIn("credentials", {
@@ -51,14 +52,14 @@ const Page = () => {
       console.log(signInData);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        setFormErrors(error.errors);
+        setIsError(true);
       }
     }
   };
 
   return (
     <div>
-      <div className="flex flex-col items-center w-[360px] text-sm">
+      <div className="flex flex-col items-center w-[320px] md:w-[400px] text-sm">
         <p className="text-3xl font-semibold">Sign-in an account</p>
         <p className="text-muted-foreground">
           Enter your credentials to sign-in into account
@@ -74,6 +75,7 @@ const Page = () => {
               placeholder="example@example.com"
               value={formData.email}
               onChange={handleChange}
+              isError={isError}
             />
           </div>
           <div className="grid gap-2">
@@ -84,6 +86,7 @@ const Page = () => {
               placeholder="password"
               value={formData.password}
               onChange={handleChange}
+              isError={isError}
             />
           </div>
         </div>
