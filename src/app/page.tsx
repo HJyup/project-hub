@@ -29,7 +29,7 @@ export default function Home() {
         </PageHeaderDescription>
         <section className="flex w-full items-center space-x-4 pb-8 pt-4 md:pb-10">
           <Link
-            href="auth/sign-in"
+            href="hub/projects"
             className={cn(buttonVariants(), "rounded-[6px]")}
           >
             Get Started
