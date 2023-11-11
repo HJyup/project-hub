@@ -11,7 +11,7 @@ export interface UserResponse {
   error: AxiosError | null;
 }
 
-export async function getUser(): Promise<UserResponse> {
+async function getUser(): Promise<UserResponse> {
   try {
     const { data } = await axios.get("/api/auth/me");
 
