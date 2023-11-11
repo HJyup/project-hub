@@ -3,6 +3,7 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { z } from "zod";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -12,21 +13,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 
 const userSchema = z.object({
-  username: z.string(),
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long" }),
+  email: z.string().email(),
+  password: z.string(),
 });
 
 const Page = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [formErrors, setFormErrors] = useState<z.ZodIssue[] | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,30 +33,22 @@ const Page = () => {
     try {
       userSchema.parse(formData);
 
-      const response = await fetch("../api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        }),
+      const signInData = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
       });
-      console.log(response);
-      if (response.ok) {
+
+      if (signInData?.error) {
         toast({
-          title: "Registration was successful",
-          description: `Welcome, ${formData.email}`,
+          title: "Sign in was unsuccessful",
+          description: "Please, check your email and password",
         });
-        router.push("../auth/sign-in");
       } else {
-        toast({
-          title: "Registration was unsuccessful",
-          description: "Please, check your data",
-        });
+        router.push("/hub/projects");
       }
+
+      console.log(signInData);
     } catch (error) {
       if (error instanceof z.ZodError) {
         setFormErrors(error.errors);
@@ -73,23 +59,13 @@ const Page = () => {
   return (
     <div>
       <div className="flex flex-col items-center w-[360px] text-sm">
-        <p className="text-3xl font-semibold">Sign-up an account</p>
+        <p className="text-3xl font-semibold">Sign-in an account</p>
         <p className="text-muted-foreground">
-          Enter your credentials to create a new account
+          Enter your credentials to sign-in into account
         </p>
       </div>
       <form className="flex flex-col gap-5 mt-5" onSubmit={onSubmit}>
         <div className="flex flex-col gap-5">
-          <div className="grid gap-2">
-            <Label>Username</Label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="HJyup"
-              value={formData.username}
-              onChange={handleChange}
-            />
-          </div>
           <div className="grid gap-2">
             <Label>Email</Label>
             <Input
@@ -112,13 +88,15 @@ const Page = () => {
           </div>
         </div>
         <div className="flex flex-col items-end gap-2">
-          <Button className="w-full">Create account</Button>
+          <Button className="w-full" type="submit">
+            Sign-in
+          </Button>
           <Link
-            href={"./sign-in"}
+            href={"./sign-up"}
             className={cn(buttonVariants({ variant: "link" }), "p-0")}
           >
             <p className="text-muted-foreground font-light text-sm">
-              Already have an account?
+              Don't have an account?
             </p>
           </Link>
         </div>

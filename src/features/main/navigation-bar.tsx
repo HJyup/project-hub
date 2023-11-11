@@ -3,6 +3,7 @@
 import { HTMLAttributes } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -12,6 +13,7 @@ import { cn } from "@/lib/utils";
 interface NavigationBarProps extends HTMLAttributes<HTMLDivElement> {}
 
 const NavigationBar = ({ className, ...props }: NavigationBarProps) => {
+  const session = useSession();
   const pathname = usePathname();
 
   return (
@@ -36,7 +38,7 @@ const NavigationBar = ({ className, ...props }: NavigationBarProps) => {
         <ScrollBar orientation="horizontal" className="invisible" />
       </ScrollArea>
       <div className="hidden gap-2 items-center pr-4 md:flex">
-        <div>HJyup</div>
+        <div>{session.data?.user?.name}</div>
         <Avatar>
           <AvatarImage src="https://avatars.githubusercontent.com/u/89708817?v=4" />
         </Avatar>

@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 
 import { Badge } from "@/components/ui/badge";
+
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="w-screen h-screen flex">

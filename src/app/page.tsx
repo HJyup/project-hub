@@ -1,14 +1,12 @@
-"use client";
-
 import Link from "next/link";
 
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/font/page-header";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+} from "@/components/ui/page-header";
 import { Separator } from "@/components/ui/separator";
 import FeaturesCard, { cardsData } from "@/features/main/features-card";
 import { cn } from "@/lib/utils";
@@ -31,7 +29,7 @@ export default function Home() {
         </PageHeaderDescription>
         <section className="flex w-full items-center space-x-4 pb-8 pt-4 md:pb-10">
           <Link
-            href="auth/login"
+            href="auth/sign-in"
             className={cn(buttonVariants(), "rounded-[6px]")}
           >
             Get Started
