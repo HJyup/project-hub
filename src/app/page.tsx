@@ -1,16 +1,14 @@
-"use client";
-
 import Link from "next/link";
 
+import FeaturesCard, { cardsData } from "@/components/modules/features-card";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/font/page-header";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+} from "@/components/ui/page-header";
 import { Separator } from "@/components/ui/separator";
-import FeaturesCard, { cardsData } from "@/features/main/features-card";
 import { cn } from "@/lib/utils";
 
 export default function Home() {

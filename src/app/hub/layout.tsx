@@ -1,6 +1,8 @@
+"use client";
+
 import { ReactNode } from "react";
 
-import NavigationBar from "@/features/main/navigation-bar";
+import NavigationBar from "@/components/modules/navigation-bar";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
