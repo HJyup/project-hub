@@ -1,4 +1,4 @@
-export const navigations = [
+export const navigation = [
   {
     name: "Projects",
     href: "/hub/projects",
