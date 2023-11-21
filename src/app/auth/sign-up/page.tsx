@@ -17,9 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import { userService } from "@/services/user";
+import useRegisterUserMutation from "@/query/useRegisterUserMutation";
+import { UserRegistrationData } from "@/types/user";
 
 const formSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -34,8 +34,8 @@ const formSchema = yup.object().shape({
 });
 
 const Page = () => {
+  const registerUser = useRegisterUserMutation();
   const router = useRouter();
-  const { toast } = useToast();
   const form = useForm({
     resolver: yupResolver(formSchema),
     defaultValues: {
@@ -45,27 +45,11 @@ const Page = () => {
     },
   });
 
-  const onSubmit = async (values: {
-    username: string;
-    email: string;
-    password: string;
-  }) => {
-    try {
-      await userService.registerUser(values);
+  const onSubmit = (values: UserRegistrationData) => {
+    registerUser.mutate(values);
 
-      toast({
-        title: "Registration was successful",
-        description: `Welcome, ${values.username}`,
-      });
-
+    if (registerUser.isSuccess) {
       router.push("/auth/sign-in");
-    } catch (error) {
-      if (error instanceof Error) {
-        toast({
-          title: "Registration was unsuccessful",
-          description: "Please, check your data",
-        });
-      }
     }
   };
 

@@ -51,7 +51,6 @@ const Page = () => {
     } else {
       toast({
         title: "Sign-in was successful",
-        description: "Let's explore ProjectHub",
       });
 
       router.push("/hub/projects");

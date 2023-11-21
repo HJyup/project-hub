@@ -1,55 +1,23 @@
-"use client";
+import request from "@/lib/request";
+import { CreateProject } from "@/types/project";
 
-export class projectService {
+export class ProjectService {
   static getProject = async (projectId: string) => {
-    const response = await fetch(`/api/hub/projects/${projectId}`, {
-      method: "GET",
+    return await request.get({
+      url: `/api/hub/projects/${projectId}`,
     });
-
-    if (response.ok) {
-      return await response.json();
-    }
-
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Fetching project data failed");
   };
 
-  static createProject = async (data: {
-    name: string;
-    description: string;
-    deadline: string;
-    userId: number;
-  }) => {
-    const deadlineDate = new Date(data.deadline);
-
-    const requestData = {
-      ...data,
-      deadline: deadlineDate.toISOString(),
-    };
-
-    const response = await fetch("/api/hub/projects", {
-      method: "POST",
-      body: JSON.stringify(requestData),
+  static createProject = async (data: CreateProject) => {
+    return await request.post({
+      url: "/api/hub/projects",
+      body: data,
     });
-
-    if (response.ok) {
-      return await response.json();
-    }
-
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Create project was unsuccessful");
   };
 
   static deleteProject = async (projectId: string) => {
-    const response = await fetch(`/api/hub/projects/${projectId}`, {
-      method: "DELETE",
+    return await request.delete({
+      url: `/api/hub/projects/${projectId}`,
     });
-
-    if (response.ok) {
-      return await response.json();
-    }
-
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Deleting project data failed");
   };
 }

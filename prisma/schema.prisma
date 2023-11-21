@@ -1,3 +1,4 @@
+// Setup
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,6 +9,23 @@ datasource db {
   relationMode = "prisma"
 }
 
+// Enums
+enum ProjectStatus {
+  Planning
+  InProgress
+  Completed
+  OnHold
+}
+
+enum TaskStatus {
+  NotStarted
+  InProgress
+  Completed
+  Blocked
+}
+
+
+// Models
 model User {
   id        Int       @id @default(autoincrement())
   username  String
@@ -16,31 +34,59 @@ model User {
   createdAt DateTime  @default(now())
   updateAt  DateTime  @updatedAt
   projects  Project[]
+
+  @@index([id])
+}
+
+model ProjectCategory {
+  id           Int       @id @default(autoincrement())
+  categoryName String
+  color        String
+  projects     Project[]
+
+  @@index([id])
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   name        String
   description String
   deadline    DateTime
-  status      String?
-  user        User     @relation(fields: [userId], references: [id])
+  status      ProjectStatus?
+  user        User            @relation(fields: [userId], references: [id])
   userId      Int
-  task        Task[]
+  tasks       Task[]
+  category    ProjectCategory? @relation(fields: [categoryId], references: [id])
+  categoryId  Int?
 
   @@index([userId])
+  @@index([categoryId])
+}
+
+model TaskCategory {
+  id           Int    @id @default(autoincrement())
+  categoryName String
+  color        String
+  tasks        Task[]
+
+  @@index([id])
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String
-  description String
-  priority    Int
+  description String?
+  priority    Int?
   duration    Int?
   taskDate    DateTime
   deadline    DateTime
-  category    String
-  projectId   Int      @unique
+  status      TaskStatus?
+  category    TaskCategory? @relation(fields: [categoryId], references: [id])
+  categoryId  Int?
+  projectId   Int
 
   project Project @relation(fields: [projectId], references: [id])
+
+  @@index([projectId])
+  @@index([categoryId])
 }

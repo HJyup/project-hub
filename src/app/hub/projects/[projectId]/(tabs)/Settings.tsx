@@ -1,15 +1,15 @@
 import { useRouter } from "next/navigation";
 
-import DeleteProjectDialog from "@/components/modules/delete-project-dialog";
+import DeleteProjectDialog from "@/components/modules/projects/delete-project-dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { projectService } from "@/services/project";
+import { ProjectService } from "@/services/project";
 
 const Settings = ({ projectId }: { projectId: string }) => {
   const router = useRouter();
   const { toast } = useToast();
   const handleDelete = async () => {
     try {
-      await projectService.deleteProject(projectId);
+      await ProjectService.deleteProject(projectId);
 
       toast({
         title: "Project deleted successfully",
@@ -26,7 +26,7 @@ const Settings = ({ projectId }: { projectId: string }) => {
   };
 
   return (
-    <div className="p-10">
+    <div>
       <DeleteProjectDialog handleDelete={handleDelete} />
     </div>
   );

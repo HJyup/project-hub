@@ -8,9 +8,16 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { navigation } from "@/types/navigation";
 
 interface NavigationBarProps extends HTMLAttributes<HTMLDivElement> {}
+
+export const navigation = [
+  {
+    name: "Projects",
+    href: "/hub/projects",
+    code: "https://github.com/shadcn/ui/tree/main/apps/www/app/examples/cards",
+  },
+];
 
 const NavigationBar = ({ className, ...props }: NavigationBarProps) => {
   const session = useSession();

@@ -25,7 +25,7 @@ const DeleteProjectDialog = ({
           buttonVariants({ size: "sm", variant: "destructive" }),
         )}
       >
-        <p className="hidden md:block">Delete project</p>
+        <p>Delete project</p>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

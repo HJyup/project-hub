@@ -1,47 +1,23 @@
-"use client";
+import request from "@/lib/request";
+import { UserRegistrationData } from "@/types/user";
 
-export class userService {
-  static registerUser = async (data: {
-    username: string;
-    email: string;
-    password: string;
-  }) => {
-    const response = await fetch("/api/auth/sign-up", {
-      method: "POST",
-      body: JSON.stringify(data),
+export class UserService {
+  static registerUser = async (data: UserRegistrationData) => {
+    return await request.post({
+      url: "/api/auth/sign-up",
+      body: data,
     });
-
-    if (response.ok) {
-      return await response.json();
-    }
-
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Registration failed");
   };
 
   static getUser = async (userId: string) => {
-    const response = await fetch(`/api/user/${userId}`, {
-      method: "GET",
+    return await request.get({
+      url: `/api/user/${userId}`,
     });
-
-    if (response.ok) {
-      return await response.json();
-    }
-
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Fetching user's data failed");
   };
 
-  static getProjects = async (userId: string | undefined) => {
-    const response = await fetch(`/api/user/${userId}/projects`, {
-      method: "GET",
+  static getProjects = async (userId: string) => {
+    return await request.get({
+      url: `/api/user/${userId}/projects`,
     });
-
-    if (response.ok) {
-      return await response.json();
-    }
-
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Fetching user's projects failed");
   };
 }
