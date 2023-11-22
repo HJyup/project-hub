@@ -8,6 +8,20 @@ datasource db {
   relationMode = "prisma"
 }
 
+enum ProjectStatus {
+  Planning
+  InProgress
+  Completed
+  OnHold
+}
+
+enum TaskStatus {
+  NotStarted
+  InProgress
+  Completed
+  Blocked
+}
+
 model User {
   id        Int       @id @default(autoincrement())
   username  String
@@ -16,29 +30,51 @@ model User {
   createdAt DateTime  @default(now())
   updateAt  DateTime  @updatedAt
   projects  Project[]
+
+  @@index([id])
+}
+
+model Category {
+  id           Int       @id @default(autoincrement())
+  categoryName String
+  color        String
+  tasks        Task[]
+  projects     Project[]
+
+  @@index([id])
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          Int            @id @default(autoincrement())
   name        String
   description String
   deadline    DateTime
-  category    String
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int      @unique
-  task        Task[]
+  status      ProjectStatus?
+  user        User           @relation(fields: [userId], references: [id])
+  userId      Int
+  tasks       Task[]
+  category    Category?      @relation(fields: [categoryId], references: [id])
+  categoryId  Int?
+
+  @@index([userId])
+  @@index([categoryId])
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   name        String
-  description String
-  priority    Int
+  description String?
+  priority    Int?
   duration    Int?
   taskDate    DateTime
   deadline    DateTime
-  category    String
-  projectId   Int      @unique
+  status      TaskStatus?
+  category    Category?   @relation(fields: [categoryId], references: [id])
+  categoryId  Int?
+  projectId   Int
 
   project Project @relation(fields: [projectId], references: [id])
+
+  @@index([projectId])
+  @@index([categoryId])
 }

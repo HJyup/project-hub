@@ -1,73 +1,55 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { z } from "zod";
+import * as yup from "yup";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/utils";
+import useUserRegisterMutation from "@/lib/query/user/useUserRegisterMutation";
+import UserRegistrationData from "@/lib/services/user/types/user-registration-data";
+import { cn } from "@/lib/utils/cn";
 
-const userSchema = z.object({
-  username: z.string(),
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z
+const formSchema = yup.object().shape({
+  username: yup.string().required("Username is required"),
+  email: yup
     .string()
-    .min(8, { message: "Password must be at least 8 characters long" }),
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .required("Password is required"),
 });
 
 const Page = () => {
+  const registerUser = useUserRegisterMutation();
   const router = useRouter();
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
+  const form = useForm({
+    resolver: yupResolver(formSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
   });
-  const [isError, setIsError] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
+  const onSubmit = (values: UserRegistrationData) => {
+    registerUser.mutate(values);
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      setIsError(false);
-      userSchema.parse(formData);
-
-      const response = await fetch("../api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-      console.log(response);
-      if (response.ok) {
-        toast({
-          title: "Registration was successful",
-          description: `Welcome, ${formData.email}`,
-        });
-        router.push("../auth/sign-in");
-      } else {
-        toast({
-          title: "Registration was unsuccessful",
-          description: "Please, check your data",
-        });
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        setIsError(true);
-      }
+    if (registerUser.isSuccess) {
+      router.push("/auth/sign-in");
     }
   };
 
@@ -79,54 +61,66 @@ const Page = () => {
           Enter your credentials to create a new account
         </p>
       </div>
-      <form className="flex flex-col gap-5 mt-5" onSubmit={onSubmit}>
-        <div className="flex flex-col gap-5">
-          <div className="grid gap-2">
-            <Label>Username</Label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="HJyup"
-              value={formData.username}
-              onChange={handleChange}
-              isError={isError}
-            />
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-3 mt-5"
+        >
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input placeholder="Hyup" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="example@gmail.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex flex-col items-end gap-2 mt-5">
+            <Button className="w-full">Create account</Button>
+            <Link
+              href={"./sign-in"}
+              className={cn(buttonVariants({ variant: "link" }), "p-0")}
+            >
+              <p className="text-muted-foreground font-light text-sm">
+                Already have an account?
+              </p>
+            </Link>
           </div>
-          <div className="grid gap-2">
-            <Label>Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="example@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              isError={isError}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label>Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="password"
-              value={formData.password}
-              onChange={handleChange}
-              isError={isError}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col items-end gap-2">
-          <Button className="w-full">Create account</Button>
-          <Link
-            href={"./sign-in"}
-            className={cn(buttonVariants({ variant: "link" }), "p-0")}
-          >
-            <p className="text-muted-foreground font-light text-sm">
-              Already have an account?
-            </p>
-          </Link>
-        </div>
-      </form>
+        </form>
+      </Form>
     </div>
   );
 };

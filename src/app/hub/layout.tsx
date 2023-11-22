@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-import NavigationBar from "@/components/modules/navigation-bar";
+import NavigationBar from "@/components/modules/hub/navigation-bar";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (

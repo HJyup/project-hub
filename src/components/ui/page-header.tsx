@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 import Balance from "react-wrap-balancer";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 function PageHeader({
   className,
