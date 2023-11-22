@@ -1,5 +1,6 @@
-import request from "@/lib/request";
-import { UserRegistrationData } from "@/types/user";
+import request from "@/lib/services/request";
+
+import UserRegistrationData from "./types/user-registration-data";
 
 export class UserService {
   static registerUser = async (data: UserRegistrationData) => {

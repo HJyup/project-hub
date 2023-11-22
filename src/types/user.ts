@@ -1,4 +1,4 @@
-export type UserType = {
+export type User = {
   id: number;
   username: string;
   email: string;
@@ -6,8 +6,3 @@ export type UserType = {
   createdAt: Date;
   updateAt: Date;
 };
-
-export type UserRegistrationData = Pick<
-  UserType,
-  "username" | "email" | "password"
->;

@@ -9,11 +9,16 @@ export const GET = async (
   try {
     const project = await db.project.findUnique({
       where: { id: Number(params.projectId) },
+      include: { category: true, tasks: true },
     });
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const { categoryId, ...projectData } = project;
 
     return NextResponse.json(
       {
-        data: project,
+        data: projectData,
         message: "Project fetched successfully",
       },
       { status: 201 },

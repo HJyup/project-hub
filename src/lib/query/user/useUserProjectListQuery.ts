@@ -3,7 +3,7 @@
 import { useQuery } from "react-query";
 import { useSession } from "next-auth/react";
 
-import { UserService } from "@/services/user";
+import { UserService } from "@/lib/services";
 
 const useUserProjectListQuery = () => {
   const session = useSession();

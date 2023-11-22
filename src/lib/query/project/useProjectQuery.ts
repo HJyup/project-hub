@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 
 import { useToast } from "@/components/ui/use-toast";
-import { ProjectService } from "@/services/project";
+import { ProjectService } from "@/lib/services";
 
 const useProjectQuery = (projectId: string) => {
   const { toast } = useToast();

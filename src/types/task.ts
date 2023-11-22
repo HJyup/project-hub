@@ -1,6 +1,4 @@
-import { BaseType } from "@/types/base/base-type";
-import { CategoryType } from "@/types/base/category";
-import { Priority } from "@/types/base/priority";
+import { Category } from "@/types/category";
 
 export type TaskStatus =
   | "Not Started"
@@ -8,14 +6,15 @@ export type TaskStatus =
   | "Completed"
   | "Blocked";
 
-export type TaskType = BaseType & {
-  status: TaskStatus;
-  priority: Priority;
+export type Task = {
+  id: number;
+  name: string;
+  description?: string;
+  priority?: number;
   duration?: number;
   taskDate: Date;
   deadline: Date;
-  category: TaskCategoryType;
+  status?: TaskStatus;
+  category?: Category;
   projectId: number;
 };
-
-export type TaskCategoryType = CategoryType;

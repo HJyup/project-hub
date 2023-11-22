@@ -3,10 +3,10 @@
 import { useMutation } from "react-query";
 
 import { useToast } from "@/components/ui/use-toast";
-import { UserService } from "@/services/user";
+import { UserService } from "@/lib/services";
 import { UserRegistrationData } from "@/types/user";
 
-export const useRegisterUserMutation = () => {
+export const useUserRegisterMutation = () => {
   const { toast } = useToast();
 
   return useMutation(
@@ -31,4 +31,4 @@ export const useRegisterUserMutation = () => {
   );
 };
 
-export default useRegisterUserMutation;
+export default useUserRegisterMutation;

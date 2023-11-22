@@ -4,16 +4,16 @@ import { useMutation } from "react-query";
 import { useSession } from "next-auth/react";
 
 import { useToast } from "@/components/ui/use-toast";
-import { ProjectService } from "@/services/project";
-import { CreateProject } from "@/types/project";
+import { ProjectService } from "@/lib/services";
+import CreateProject from "@/lib/services/project/types/create-project";
 
-const useCreateProjectMutation = () => {
+const useProjectCreateMutation = () => {
   const { toast } = useToast();
   const session = useSession();
   const userId = Number(session.data?.user.id);
 
   return useMutation(
-    async (newProjectData: Omit<CreateProject, "userId">) => {
+    async (newProjectData: CreateProject) => {
       if (userId !== undefined) {
         return ProjectService.createProject({ ...newProjectData, userId });
       }
@@ -36,4 +36,4 @@ const useCreateProjectMutation = () => {
   );
 };
 
-export default useCreateProjectMutation;
+export default useProjectCreateMutation;

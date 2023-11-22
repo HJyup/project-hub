@@ -1,21 +1,22 @@
-import { BaseType } from "@/types/base/base-type";
-import { CategoryType } from "@/types/base/category";
-import { Priority } from "@/types/base/priority";
+import { Category } from "@/types/category";
+import { Task } from "@/types/task";
 
-type ProjectStatus = "Planning" | "In Progress" | "Completed" | "On Hold";
+export type ProjectStatus =
+  | "Planning"
+  | "In Progress"
+  | "Completed"
+  | "On hold";
 
-export type ProjectType = BaseType & {
-  category: ProjectCategoryType;
-  status: ProjectStatus;
-  priority: Priority;
-  completionPercentage: number;
+export type Project = {
+  id: number;
+  name: string;
+  description: string;
   deadline: Date;
+  status?: ProjectStatus;
   userId: number;
+  category?: Category;
 };
 
-export type ProjectCategoryType = CategoryType;
-
-export type CreateProject = Pick<
-  ProjectType,
-  "name" | "description" | "deadline" | "userId"
->;
+export type ProjectsWithTask = Project & {
+  task: Task[];
+};

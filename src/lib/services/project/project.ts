@@ -1,5 +1,5 @@
-import request from "@/lib/request";
-import { CreateProject } from "@/types/project";
+import CreateProject from "@/lib/services/project/types/create-project";
+import request from "@/lib/services/request";
 
 export class ProjectService {
   static getProject = async (projectId: string) => {

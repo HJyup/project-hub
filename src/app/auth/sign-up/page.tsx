@@ -17,9 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import useRegisterUserMutation from "@/query/useRegisterUserMutation";
-import { UserRegistrationData } from "@/types/user";
+import useUserRegisterMutation from "@/lib/query/user/useUserRegisterMutation";
+import UserRegistrationData from "@/lib/services/user/types/user-registration-data";
+import { cn } from "@/lib/utils/cn";
 
 const formSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -34,7 +34,7 @@ const formSchema = yup.object().shape({
 });
 
 const Page = () => {
-  const registerUser = useRegisterUserMutation();
+  const registerUser = useUserRegisterMutation();
   const router = useRouter();
   const form = useForm({
     resolver: yupResolver(formSchema),

@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 interface NavigationBarProps extends HTMLAttributes<HTMLDivElement> {}
 

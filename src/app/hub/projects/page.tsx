@@ -3,20 +3,20 @@
 import { ChangeEvent, useState } from "react";
 
 import MainTabsLayout from "@/components/layout/main-tabs-layout";
-import MainTitle from "@/components/modules/main-title";
-import CreateProjectDialog from "@/components/modules/projects/create-project-dialog";
-import ProjectCard from "@/components/modules/projects/project-card";
+import CreateProjectDialog from "@/components/modules/hub/projects/create-project-dialog";
+import ProjectCard from "@/components/modules/hub/projects/project-card";
+import MainTitle from "@/components/modules/main/main-title";
 import { Input } from "@/components/ui/input";
-import { formatDate } from "@/lib/utils";
-import useCreateProjectMutation from "@/query/useCreateProjectMutation";
-import useUserProjectListQuery from "@/query/useUserProjectListQuery";
-import { ProjectType } from "@/types/project";
+import useProjectCreateMutation from "@/lib/query/project/useProjectCreateMutation";
+import useUserProjectListQuery from "@/lib/query/user/useUserProjectListQuery";
+import { formatDate } from "@/lib/utils/formatDate";
+import { Project } from "@/types/project";
 
 const Page = () => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [projects, isLoading] = useUserProjectListQuery();
-  const createProject = useCreateProjectMutation();
+  const createProject = useProjectCreateMutation();
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -24,7 +24,7 @@ const Page = () => {
 
   const filteredProjects =
     !isLoading && projects
-      ? projects.data.filter((project: ProjectType) =>
+      ? projects.data.filter((project: Project) =>
           project.name.toLowerCase().includes(searchTerm.toLowerCase()),
         )
       : [];
@@ -64,7 +64,7 @@ const Page = () => {
         />
       </div>
       <div className="w-full flex flex-col flex-wrap lg:flex-row lg:-mx-2">
-        {filteredProjects.map((project: ProjectType) => (
+        {filteredProjects.map((project: Project) => (
           <div key={project.id} className="w-full lg:w-1/3 mb-4 lg:px-2">
             <ProjectCard
               id={project.id}

@@ -3,9 +3,9 @@
 import Settings from "@/app/hub/projects/[projectId]/(tabs)/Settings";
 import Tasks from "@/app/hub/projects/[projectId]/(tabs)/Tasks";
 import MainTabsLayout from "@/components/layout/main-tabs-layout";
-import MainTitle from "@/components/modules/main-title";
+import MainTitle from "@/components/modules/main/main-title";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import useProjectQuery from "@/query/useProjectQuery";
+import useProjectQuery from "@/lib/query/project/useProjectQuery";
 
 const Page = ({ params }: { params: { projectId: string } }) => {
   const [project, isLoading] = useProjectQuery(params.projectId);

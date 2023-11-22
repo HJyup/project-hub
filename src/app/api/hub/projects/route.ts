@@ -11,8 +11,9 @@ export const POST = async (request: Request) => {
       data: {
         name: name,
         description: description,
+        status: "Planning",
         deadline: deadline,
-        userId: userId,
+        userId: Number(userId),
       },
     });
 

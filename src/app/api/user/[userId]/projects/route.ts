@@ -9,11 +9,20 @@ export const GET = async (
   try {
     const allProjects = await db.project.findMany({
       where: { userId: Number(params.userId) },
+      include: { category: true },
+    });
+
+    const projectsWithoutCategoryId = allProjects.map((project) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { categoryId, ...projectData } = project;
+      return {
+        ...projectData,
+      };
     });
 
     return NextResponse.json(
       {
-        data: allProjects,
+        data: projectsWithoutCategoryId,
         message: "Projects fetched successfully",
       },
       { status: 201 },
