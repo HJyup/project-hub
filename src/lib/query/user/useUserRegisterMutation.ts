@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 
 import { useToast } from "@/components/ui/use-toast";
 import { UserService } from "@/lib/services";
-import { UserRegistrationData } from "@/types/user";
+import UserRegistrationData from "@/lib/services/user/types/user-registration-data";
 
 export const useUserRegisterMutation = () => {
   const { toast } = useToast();
