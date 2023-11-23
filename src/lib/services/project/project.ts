@@ -4,7 +4,7 @@ import request from "@/lib/services/request";
 export class ProjectService {
   static getProject = async (projectId: string) => {
     return await request.get({
-      url: `/api/hub/projects/${projectId}`,
+      url: `http://localhost:3000/api/hub/projects/${projectId}`,
     });
   };
 

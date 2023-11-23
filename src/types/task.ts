@@ -15,6 +15,8 @@ export type Task = {
   taskDate: Date;
   deadline: Date;
   status?: TaskStatus;
-  category?: Category;
+  category?: TaskCategory;
   projectId: number;
 };
+
+export type TaskCategory = Category;
