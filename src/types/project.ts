@@ -14,8 +14,10 @@ export type Project = {
   deadline: Date;
   status?: ProjectStatus;
   userId: number;
-  category?: Category;
+  category?: ProjectCategory;
 };
+
+export type ProjectCategory = Category;
 
 export type ProjectsWithTask = Project & {
   task: Task[];
