@@ -1,24 +1,26 @@
 export const formatDate = (dateInput: Date) => {
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
+  const monthNamesShort = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const date = new Date(dateInput);
 
-  const day = date.getDay();
+  const day = date.getDate();
   const monthIndex = date.getMonth();
   const year = date.getFullYear();
 
-  return `${day} ${monthNames[monthIndex]} ${year}`;
+  const formattedDay = day < 10 ? `0${day}` : day;
+
+  return `${formattedDay} ${monthNamesShort[monthIndex]} ${year}`;
 };

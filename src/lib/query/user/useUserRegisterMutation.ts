@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { UserService } from "@/lib/services";
 import UserRegistrationData from "@/lib/services/user/types/user-registration-data";
 
-export const useUserRegisterMutation = () => {
+export const useUserRegisterMutation = (onSuccessCallback: () => void) => {
   const { toast } = useToast();
 
   return useMutation(
@@ -14,6 +14,7 @@ export const useUserRegisterMutation = () => {
       UserService.registerUser(userData),
     {
       onSuccess: (data) => {
+        onSuccessCallback();
         toast({
           title: "Registration was successful",
           description: `Welcome, ${data.username}`,

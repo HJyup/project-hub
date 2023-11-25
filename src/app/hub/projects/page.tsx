@@ -16,7 +16,12 @@ const Page = () => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [projects, isLoading] = useUserProjectListQuery();
-  const createProject = useProjectCreateMutation();
+
+  const handleProjectCreated = () => {
+    setOpen(false);
+  };
+
+  const createProject = useProjectCreateMutation(handleProjectCreated);
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -39,9 +44,6 @@ const Page = () => {
       description: values.description,
       deadline: new Date(values.deadline),
     });
-    if (createProject.isSuccess) {
-      setOpen(false);
-    }
   };
 
   return (

@@ -74,8 +74,8 @@ model Task {
   description String?
   priority    Int?
   duration    Int?
-  taskDate    DateTime
-  deadline    DateTime
+  taskDate    DateTime?
+  deadline    DateTime?
   status      TaskStatus?
   category    TaskCategory? @relation(fields: [categoryId], references: [id])
   categoryId  Int?
