@@ -10,13 +10,13 @@ export class UserService {
     });
   };
 
-  static getUser = async (userId: string) => {
+  static getUser = async (userId: number) => {
     return await request.get({
       url: `/api/user/${userId}`,
     });
   };
 
-  static getProjects = async (userId: string) => {
+  static getProjects = async (userId: number) => {
     return await request.get({
       url: `/api/user/${userId}/projects`,
     });

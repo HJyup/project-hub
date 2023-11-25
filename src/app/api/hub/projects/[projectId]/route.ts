@@ -14,6 +14,7 @@ export const GET = async (
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { categoryId, ...projectData } = project;
 
     return NextResponse.json(
