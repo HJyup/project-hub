@@ -13,10 +13,10 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
-import columns from "@/components/modules/hub/projects/task/table/columns";
-import Header from "@/components/modules/hub/projects/task/table/header";
-import Pagination from "@/components/modules/hub/projects/task/table/pagination";
-import { data } from "@/components/modules/hub/projects/task/testData/tasks";
+import TaskActionsDropdown from "@/components/modules/hub/projects/table/actions/task-actions-dropdown";
+import columns from "@/components/modules/hub/projects/table/columns";
+import Header from "@/components/modules/hub/projects/table/header";
+import Pagination from "@/components/modules/hub/projects/table/pagination";
 import {
   Table,
   TableBody,
@@ -25,19 +25,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useCreateTaskMutation from "@/lib/query/project/useCreateTaskMutation";
+import useDeleteTaskMutation from "@/lib/query/project/useDeleteTaskMutation";
+import { Task } from "@/types/task";
 
-export type Task = {
-  id: string;
-  name: string;
-  status: "not started" | "ongoing" | "finished" | "delayed";
-  deadline: Date;
-};
-
-const Tasks = () => {
+const TaskTable = ({
+  data,
+  params,
+}: {
+  data: Task[];
+  params: { projectId: string };
+}) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const createTask = useCreateTaskMutation();
+  const deleteTask = useDeleteTaskMutation();
+
+  const handleCreate = () => {
+    console.log("create");
+  };
+
+  columns.push({
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => (
+      <TaskActionsDropdown onDelete={() => deleteTask(row.original.id)} />
+    ),
+  });
 
   const table = useReactTable({
     data,
@@ -60,7 +76,10 @@ const Tasks = () => {
 
   return (
     <div className="w-full">
-      <Header table={table} />
+      <Header
+        table={table}
+        onClickCreate={() => createTask(params.projectId, handleCreate)}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -113,4 +132,4 @@ const Tasks = () => {
   );
 };
 
-export default Tasks;
+export default TaskTable;

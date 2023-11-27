@@ -1,12 +1,17 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 import MainTabsLayout from "@/components/layout/main-tabs-layout";
 import CreateProjectDialog from "@/components/modules/hub/projects/create-project-dialog";
-import ProjectCard from "@/components/modules/hub/projects/project-card";
+import ProjectCard from "@/components/modules/hub/projects/project-card/project-card";
+import ProjectCardDropdown from "@/components/modules/hub/projects/project-card/project-card-dropdown";
 import MainTitle from "@/components/modules/main/main-title";
+import { Button } from "@/components/ui/button";
+import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import useDeleteProjectMutation from "@/lib/query/project/useDeleteProjectMutation";
 import useProjectCreateMutation from "@/lib/query/project/useProjectCreateMutation";
 import useUserProjectListQuery from "@/lib/query/user/useUserProjectListQuery";
 import { formatDate } from "@/lib/utils/formatDate";
@@ -16,12 +21,8 @@ const Page = () => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [projects, isLoading] = useUserProjectListQuery();
-
-  const handleProjectCreated = () => {
-    setOpen(false);
-  };
-
-  const createProject = useProjectCreateMutation(handleProjectCreated);
+  const createProject = useProjectCreateMutation();
+  const handleDeleteProject = useDeleteProjectMutation();
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -39,11 +40,14 @@ const Page = () => {
     description: string;
     deadline: string;
   }) => {
-    createProject.mutate({
-      name: values.name,
-      description: values.description,
-      deadline: new Date(values.deadline),
-    });
+    createProject(
+      {
+        name: values.name,
+        description: values.description,
+        deadline: new Date(values.deadline),
+      },
+      () => setOpen(false),
+    );
   };
 
   return (
@@ -74,6 +78,18 @@ const Page = () => {
               description={project.description}
               deadline={formatDate(project.deadline)}
               type="Test"
+              dropdown={
+                <ProjectCardDropdown
+                  handleDelete={() => handleDeleteProject(project.id)}
+                  dialogTrigger={
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="secondary" className="px-2 shadow-none">
+                        <ChevronDownIcon className="h-4 w-4 text-secondary-foreground" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                  }
+                />
+              }
             />
           </div>
         ))}

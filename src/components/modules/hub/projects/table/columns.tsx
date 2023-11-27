@@ -1,9 +1,8 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 
-import TaskActionsDropdown from "@/components/modules/hub/projects/task/table/actions/task-actions-dropdown";
-import TaskPriorityMapper from "@/components/modules/hub/projects/task/table/mappers/task-priority-mapper";
-import TaskStatusMapper from "@/components/modules/hub/projects/task/table/mappers/task-status-mapper";
+import TaskPriorityMapper from "@/components/modules/hub/projects/table/mappers/task-priority-mapper";
+import TaskStatusMapper from "@/components/modules/hub/projects/table/mappers/task-status-mapper";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils/formatDate";
@@ -94,11 +93,6 @@ const columns: ColumnDef<Task>[] = [
       );
     },
     cell: ({ row }) => TaskStatusMapper(row.getValue("status")),
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: () => <TaskActionsDropdown />,
   },
 ];
 

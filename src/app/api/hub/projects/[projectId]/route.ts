@@ -22,7 +22,7 @@ export const GET = async (
         data: projectData,
         message: "Project fetched successfully",
       },
-      { status: 201 },
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json({ error: "Unexpected error" }, { status: 404 });
@@ -42,7 +42,7 @@ export const DELETE = async (
       {
         message: "Project deleted successfully",
       },
-      { status: 201 },
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json({ error: "Unexpected error" }, { status: 404 });

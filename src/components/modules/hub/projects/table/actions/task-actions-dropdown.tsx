@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const TaskActionsDropdown = () => {
+const TaskActionsDropdown = ({ onDelete }: { onDelete: () => void }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,10 +21,12 @@ const TaskActionsDropdown = () => {
       <DropdownMenuContent align="end">
         <DropdownMenuItem>Edit</DropdownMenuItem>
         <DropdownMenuSeparator />
+        <DropdownMenuItem>Priority</DropdownMenuItem>
         <DropdownMenuItem>Status</DropdownMenuItem>
-        <DropdownMenuItem>Label</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-red-500">Delete</DropdownMenuItem>
+        <DropdownMenuItem className="text-red-500" onClick={onDelete}>
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

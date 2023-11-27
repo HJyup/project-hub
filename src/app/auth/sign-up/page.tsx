@@ -34,6 +34,7 @@ const formSchema = yup.object().shape({
 });
 
 const Page = () => {
+  const registerUser = useUserRegisterMutation();
   const router = useRouter();
   const form = useForm({
     resolver: yupResolver(formSchema),
@@ -48,10 +49,8 @@ const Page = () => {
     router.push("/auth/sign-in");
   };
 
-  const registerUser = useUserRegisterMutation(onRegisterSuccess);
-
   const onSubmit = (values: UserRegistrationData) => {
-    registerUser.mutate(values);
+    registerUser(values, onRegisterSuccess);
   };
 
   return (

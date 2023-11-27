@@ -1,14 +1,14 @@
 "use client";
 
-import Settings from "@/app/hub/projects/[projectId]/(tabs)/Settings";
-import Tasks from "@/app/hub/projects/[projectId]/(tabs)/Tasks";
 import MainTabsLayout from "@/components/layout/main-tabs-layout";
+import TaskTable from "@/components/modules/hub/projects/table/table-page";
 import MainTitle from "@/components/modules/main/main-title";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useProjectQuery from "@/lib/query/project/useProjectQuery";
 
 const Page = ({ params }: { params: { projectId: string } }) => {
   const [project, isLoading] = useProjectQuery(params.projectId);
+  const tasks = !isLoading && project.data.tasks ? project.data.tasks : [];
 
   if (isLoading) {
     return <p>Loading</p>;
@@ -28,10 +28,10 @@ const Page = ({ params }: { params: { projectId: string } }) => {
         </TabsList>
         <TabsContent value="overview">Some general information</TabsContent>
         <TabsContent value="tasks">
-          <Tasks />
+          <TaskTable params={params} data={tasks} />
         </TabsContent>
         <TabsContent value="settings">
-          <Settings projectId={project.data.id} />
+          <TabsContent value="overview">Some settings for project</TabsContent>
         </TabsContent>
       </Tabs>
     </MainTabsLayout>

@@ -12,14 +12,16 @@ export const POST = async (
         name: "Untitled",
         description: "Description of the task",
         status: "NotStarted",
+        priority: 1,
         projectId: Number(params.projectId),
+        deadline: new Date(),
       },
     });
 
     return NextResponse.json(
       {
         project: newTask,
-        message: "Project created successfully",
+        message: "Task created successfully",
       },
       { status: 201 },
     );

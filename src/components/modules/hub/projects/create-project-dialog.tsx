@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch } from "react";
+import { Dispatch } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PlusIcon } from "lucide-react";

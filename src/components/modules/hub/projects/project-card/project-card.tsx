@@ -1,9 +1,5 @@
-import {
-  ChevronDownIcon,
-  CircleIcon,
-  StarIcon,
-  TrashIcon,
-} from "@radix-ui/react-icons";
+import { ReactNode } from "react";
+import { CircleIcon, StarIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -14,15 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 
 const ProjectCard = ({
@@ -31,12 +18,14 @@ const ProjectCard = ({
   description,
   deadline,
   type,
+  dropdown,
 }: {
   id: number;
   title: string;
   description: string;
   deadline: string;
   type: string;
+  dropdown?: ReactNode;
 }) => {
   return (
     <Card>
@@ -52,28 +41,7 @@ const ProjectCard = ({
             </Button>
           </Link>
           <Separator orientation="vertical" className="h-[20px]" />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" className="px-2 shadow-none">
-                <ChevronDownIcon className="h-4 w-4 text-secondary-foreground" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              alignOffset={-5}
-              className="w-[165px]"
-              forceMount
-            >
-              <DropdownMenuLabel>Project Settings</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem>Status</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Deadline</DropdownMenuCheckboxItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">
-                <TrashIcon className="mr-2 h-4 w-4" /> Delete Project
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {dropdown && dropdown}
         </div>
       </CardHeader>
       <CardContent>

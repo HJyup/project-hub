@@ -1,6 +1,8 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { ReactNode } from "react";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -8,25 +10,18 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils/cn";
 
 const DeleteProjectDialog = ({
   handleDelete,
+  dialogTrigger,
 }: {
   handleDelete: () => void;
+  dialogTrigger: ReactNode;
 }) => {
   return (
     <Dialog>
-      <DialogTrigger
-        className={cn(
-          "flex gap-1 font-normal",
-          buttonVariants({ size: "sm", variant: "destructive" }),
-        )}
-      >
-        <p>Delete project</p>
-      </DialogTrigger>
+      {dialogTrigger && dialogTrigger}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete a project</DialogTitle>

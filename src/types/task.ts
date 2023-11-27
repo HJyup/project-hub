@@ -1,10 +1,6 @@
 import { Category } from "@/types/category";
 
-export type TaskStatus =
-  | "Not Started"
-  | "In Progress"
-  | "Completed"
-  | "Blocked";
+export type TaskStatus = "NotStarted" | "Blocked" | "InProgress" | "Completed";
 
 export type Task = {
   id: number;
